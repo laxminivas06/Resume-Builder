@@ -17,8 +17,6 @@ def generate():
     email = request.form.get('email')
     phone = request.form.get('phone')
     country = request.form.get('country')
-    linkedin = request.form.get('linkedin')
-    github = request.form.get('github')
     education = request.form.get('education')
     projects = request.form.get('projects')
     work_experience = request.form.get('work_experience')
@@ -37,8 +35,8 @@ def generate():
     # Starting position (top of page minus top margin)
     y_position = height - margin
     
-    # Helper function to draw wrapped text
-    def draw_wrapped_text(text, style="Helvetica", size=12, bold=False, indent=0):
+    # Helper function to draw wrapped text with line spacing
+    def draw_wrapped_text(text, style="Helvetica", size=12, bold=False, indent=0, line_spacing=1.15):
         nonlocal y_position
         if bold:
             p.setFont(f"{style}-Bold", size)
@@ -56,12 +54,12 @@ def generate():
                 else:
                     if current_line:
                         p.drawString(margin + indent, y_position, ' '.join(current_line))
-                        y_position -= size
+                        y_position -= size * line_spacing  # Adjust for line spacing
                     current_line = [word]
             if current_line:
                 p.drawString(margin + indent, y_position, ' '.join(current_line))
-                y_position -= size
-        y_position -= size/2  # Add small space after paragraph
+                y_position -= size * line_spacing  # Adjust for line spacing
+        y_position -= size * line_spacing / 2  # Add small space after paragraph
 
     # Header Section (centered)
     p.setFont("Helvetica-Bold", 20)
@@ -69,7 +67,8 @@ def generate():
     p.drawString((width - name_width)/2, y_position, name)
     y_position -= 30
     
-    contact_info = f"✉ {email} | 📞 {phone} | 🇮🇳 {country} | LinkedIn: {linkedin} | GitHub: {github}"
+    # Updated contact info without LinkedIn and GitHub
+    contact_info = f"✉ {email} |  {phone} |  {country}"
     p.setFont("Helvetica", 10)
     contact_width = p.stringWidth(contact_info, "Helvetica", 10)
     p.drawString((width - contact_width)/2, y_position, contact_info)
@@ -79,37 +78,36 @@ def generate():
     p.setFont("Helvetica-Bold", 14)
     p.drawString(margin, y_position, "EDUCATION")
     y_position -= 20
-    draw_wrapped_text(education)
-    
+    draw_wrapped_text(education, line_spacing=1.15)
     
     # Projects Section
     p.setFont("Helvetica-Bold", 14)
     p.drawString(margin, y_position, "PROJECTS")
     y_position -= 20
-    draw_wrapped_text(projects, indent=10)
+    draw_wrapped_text(projects, indent=10, line_spacing=1.15)
 
     # Work Experience Section
     p.setFont("Helvetica-Bold", 14)
     p.drawString(margin, y_position, "WORK EXPERIENCE")
     y_position -= 20
-    draw_wrapped_text(work_experience, indent=10)
+    draw_wrapped_text(work_experience, indent=10, line_spacing=1.15)
 
     # Skills Section
     p.setFont("Helvetica-Bold", 14)
     p.drawString(margin, y_position, "SKILLS")
     y_position -= 20
-    draw_wrapped_text(skills, indent=10)
+    draw_wrapped_text(skills, indent=10, line_spacing=1.15)
 
     # Achievements Section
     p.setFont("Helvetica-Bold", 14)
     p.drawString(margin, y_position, "ACHIEVEMENTS")
     y_position -= 20
-    draw_wrapped_text(achievements, indent=10)
+    draw_wrapped_text(achievements, indent=10, line_spacing=1.15)
 
     # Finalize PDF
     p.showPage()
     p.save()
-    buffer.seek(0)
+    buffer.seek (0)
     return send_file(buffer, as_attachment=True, download_name='resume.pdf', mimetype='application/pdf')
 
 if __name__ == '__main__':
