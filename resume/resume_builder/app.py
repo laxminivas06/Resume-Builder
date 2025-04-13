@@ -5,12 +5,33 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from io import BytesIO
 from reportlab.lib import colors
+import json
+import os
 
 app = Flask(__name__)
 
 # Register fonts
 pdfmetrics.registerFont(TTFont('Times-Roman', 'Times New Roman.ttf'))  # Regular Times New Roman
 pdfmetrics.registerFont(TTFont('Times-Roman-Bold', 'Times New Roman Bold.ttf'))  # Bold Times New Roman
+
+# Path to the JSON file
+json_file_path = 'resumes.json'
+
+def save_to_json(data):
+    # Check if the JSON file already exists
+    if os.path.exists(json_file_path):
+        # Load existing data
+        with open(json_file_path, 'r') as json_file:
+            existing_data = json.load(json_file)
+    else:
+        existing_data = []
+
+    # Append the new resume data
+    existing_data.append(data)
+
+    # Save the updated data back to the JSON file
+    with open(json_file_path, 'w') as json_file:
+        json.dump(existing_data, json_file, indent=4)
 
 @app.route('/')
 def index():
@@ -36,7 +57,7 @@ def generate():
     margin = 50  # Define your margin
     y_position = height - margin  # Start from the top of the page
 
-    # Function to wrap and draw text on the PDF canvas
+     # Function to wrap and draw text on the PDF canvas
     def draw_wrapped_text(text, font_name, line_spacing=1.5, font_size=12):
         nonlocal y_position  # Use nonlocal to modify the outer y_position variable
         p.setFont(font_name, font_size)
@@ -136,13 +157,36 @@ def generate():
     y_position -= 20
     p.setFillColor(colors.black)  # Set paragraph text color to black
     draw_wrapped_text(achievements, "Times-Roman", line_spacing=1.50)
-
     # Finalize the PDF
     p.showPage()
     p.save()
     buffer.seek(0)
 
+    # Save resume data to JSON
+    resume_data = {
+        "name": name,
+        "email": email,
+        "phone": phone,
+        "country": country,
+        "education": education,
+        "projects": projects,
+        "work_experience": work_experience,
+        "skills": skills,
+        "achievements": achievements
+    }
+    save_to_json(resume_data)
+
     return send_file(buffer, as_attachment=True, download_name='resume.pdf', mimetype='application/pdf')
+@app.route('/resumes')
+def display_resumes():
+    # Read the JSON file
+    if os.path.exists(json_file_path):
+        with open(json_file_path, 'r') as json_file:
+            resumes = json.load(json_file)
+    else:
+        resumes = []
+
+    return render_template('resumes.html', resumes=resumes)
 
 if __name__ == '__main__':
     app.run(debug=True)
