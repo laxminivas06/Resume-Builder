@@ -1,6 +1,9 @@
 {
     "cSpell.words": [
         "pagesizes",
-        "pdfgen"
+        "pdfbase",
+        "pdfgen",
+        "pdfmetrics",
+        "ttfonts"
     ]
 }
