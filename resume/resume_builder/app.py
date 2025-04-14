@@ -109,7 +109,7 @@ def generate():
         'languages': languages,
         'virtual_internships': virtual_internships,
         'research_papers': research_papers,
-        'cert ifications': certifications,
+        'certifications': certifications,
         'extracurricular_activities': extracurricular_activities,
         'linkedin': linkedin,
         'github': github
