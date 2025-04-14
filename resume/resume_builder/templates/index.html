@@ -17,18 +17,26 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
             background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h1 {
             text-align: center;
+            margin: 20px 0;
+            animation: fadeIn 1s;
         }
         form {
             background: white;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            animation: slideIn 0.5s;
         }
         label {
             display: block;
@@ -40,6 +48,11 @@
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, textarea:focus {
+            border-color: #28a745;
+            outline: none;
         }
         button {
             background-color: #28a745;
@@ -48,13 +61,67 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
         }
         button:hover {
             background-color: #218838;
+            transform: scale(1.05);
+        }
+        .about-section, .developer-info, .company-info {
+            margin-top: 30px;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            animation: fadeIn 1s;
+        }
+        .developer-info img, .company-info img {
+            border-radius: 0;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+         .developer-info img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+        .developer-info img:hover, .company-info img:hover {
+            transform: scale(1.1);
+        }
+        .social-links a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .social-links a:hover {
+            color: #28a745;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+            .developer-info img, .company-info img {
+                width: 120px;
+                height: 120px;
+            }
         }
     </style>
-      <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-     
 </head>
 <body>
 
@@ -75,7 +142,6 @@
     <input type="text" name="github" placeholder="GitHub Profile URL">
     <input type="text" name="linkedin" placeholder="LinkedIn Profile URL">
 
-    
     <label for="objective">Objective:</label>
     <textarea id="objective" name="objective" rows="3"></textarea>
 
@@ -103,17 +169,53 @@
     <label for="research_papers">Research Papers:</label>
     <textarea id="research_papers" name="research_papers" rows="3"></textarea>
     
-    
-    
     <label for="certifications">Certifications:</label>
     <textarea id="certifications" name="certifications" rows="3"></textarea>
     
     <label for="extracurricular_activities">Extracurricular Activities:</label>
     <textarea id="extracurricular_activities" name="extracurricular_activities" rows="3"></textarea>
     
-
     <button type="submit">Generate Resume</button>
 </form>
+
+<div class="about-section">
+    <h2>About This Resume Builder</h2>
+    <p>This Resume Builder is designed to help users create professional resumes quickly and easily. With a user-friendly interface, you can input your personal information, work experience, education, and skills to generate a polished resume that stands out to potential employers.</p>
+    <p>Whether you're a recent graduate or an experienced professional, this tool provides the flexibility to customize your resume to fit your unique career path. Start building your future today!</p>
+</div>
+
+<div class="company-info">
+    <h2>About Wisdom Roots</h2>
+    <img src="https://media-hosting.imagekit.io/be575db9c69449ce/logo.svg?Expires=1839253299&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=j5RX1-CDM3uAtYS6eP0lccdwzIIkjn6c58hJRFxEiCYVwhObMhsr80Df73KgBXhEp~ps~M4p8YKnc9cbLAfTlHteXX3sHKjBwnFpBOUn9cyUTnw0H1q8h~~15X6mwPtCiWlvkddpWuLuAyWJq5UEkulk57ufBmR5GIkzBSHX9laTDumCvz1ROuQ~lKJQhr572~VowAmTOFZYH76AJx1Y2TcC4VRZGMX4awPJ9BIVyqb9IYW5dgQrDXd-eC-U9yDg0~zVgA59ePbofPzVJW0bojHX3yVMgAsoEcRzCYdNDpnnAD0KSYhWjpHbTbVJIqnqnuL0ISyWUJuEiMIBtpaQcw__" alt="Wisdom Roots Logo" />
+    <p>Wisdom Roots is dedicated to empowering individuals through knowledge and skills development. We believe in nurturing talent and providing resources that help people achieve their personal and professional goals.</p>
+    <div class="social-links">
+        <a href="https://www.instagram.com/wisdomroots25/" target="_blank" title="Follow us on Instagram">
+            <i class="fab fa-instagram"></i> 
+        </a>
+        <a href="https://wisdomroots.netlify.app/" target="_blank" title="Visit our website">
+            <i class="fas fa-globe"></i> 
+        </a>
+    </div>
+</div>
+
+<div class="developer-info">
+    <img src="https://media-hosting.imagekit.io/c09687a695614552/my%20photo.jpeg?Expires=1839252759&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=AENHoB4Fup~vZp2O8xZ0n4~ENimto9yoVn~xu49W5HsXoItNqAYH2~GqumKPUZuYjB5auowLX0HHEnCMVc8ErzQ7fVSLQ6RhjsChnWZiPwb1Rieio4KwrI77M9ENImYYpywzoHBHqqr2MHFrYx2fNN5~GjCkQgqKTAH4B9kvHOAleMSG5T9lwkcGzWLb6nvpTo~dSfq7mLMiMllYz~jvspy16IfaHYrykse3UEbTP6ji8XqdI2XaJW7x7dJ8Yr0vKwHVgAQnCTvdYFFfsm1K1teTgem-9NsCpkxtievoAHuvpwpE8LBomkx9Spa2WA3-BaUvNVnzdjHkWazNf6PfJw__" alt="Developer Photo" />
+    <p>This Application was developed by <strong>Laxmi Nivas Morishetty</strong>, a passionate developer with experience in building dynamic and responsive websites. I love coding and exploring new technologies.</p>
+    <div class="social-links">
+        <a href="https://laxminivas-self-porfolio.vercel.app/" target="_blank" title="Visit my website">
+            <i class="fas fa-globe"></i> 
+        </a>
+        <a href="https://in.linkedin.com/in/laxmi-nivas-morishetty-02468m" target="_blank" title="Connect on LinkedIn">
+            <i class="fab fa-linkedin"></i> 
+        </a>
+        <a href="https://www.instagram.com/laxminivasmorishetty/" target="_blank" title="Follow me on Instagram">
+            <i class="fab fa-instagram"></i> 
+        </a>
+        <a href="https://github.com/laxminivas06" target="_blank" title="View my GitHub">
+            <i class="fab fa-github"></i> 
+        </a>
+    </div>
+</div>
 
 </body>
 </html>
