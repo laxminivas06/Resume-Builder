@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume Generator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '.rich-text',  // Class for the textarea
+            menubar: false,
+            toolbar: 'undo redo | bold  | alignleft aligncenter alignright | bullist numlist outdent indent',
+            plugins: 'lists',
+        });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,6 +53,8 @@
             background-color: #218838;
         }
     </style>
+      <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+     
 </head>
 <body>
 
@@ -60,23 +71,46 @@
 
     <label for="country">Country:</label>
     <input type="text" id="country" name="country" required>
+    
+    <input type="text" name="github" placeholder="GitHub Profile URL">
+    <input type="text" name="linkedin" placeholder="LinkedIn Profile URL">
 
     
+    <label for="objective">Objective:</label>
+    <textarea id="objective" name="objective" rows="3"></textarea>
 
     <label for="education">Education:</label>
-    <textarea id="education" name="education" rows="3" required></textarea>
+    <textarea id="education" name="education" rows="3"></textarea>
 
     <label for="projects">Projects:</label>
-    <textarea id="projects" name="projects" rows="3" required></textarea>
-
+    <textarea id="projects" name="projects" rows="3"></textarea>
+    
     <label for="work_experience">Work Experience:</label>
-    <textarea id="work_experience" name="work_experience" rows="3" required></textarea>
+    <textarea id="work_experience" name="work_experience" rows="3"></textarea>
 
-    <label for="skills">Skills:</label>
-    <textarea id="skills" name="skills" rows="3" required></textarea>
+    <label for="technical_skills">Skills:</label>
+    <textarea id="technical_skills" name="skills" rows="3"></textarea>
 
     <label for="achievements">Achievements:</label>
     <textarea id="achievements" name="achievements" rows="3"></textarea>
+    
+    <label for="languages_known">Languages Known:</label>
+    <textarea id="languages_known" name="languages" rows="3"></textarea>
+    
+    <label for="virtual_internships">Virtual Internships:</label>
+    <textarea id="virtual_internships" name="virtual_internships" rows="3"></textarea>
+    
+    <label for="research_papers">Research Papers:</label>
+    <textarea id="research_papers" name="research_papers" rows="3"></textarea>
+    
+    
+    
+    <label for="certifications">Certifications:</label>
+    <textarea id="certifications" name="certifications" rows="3"></textarea>
+    
+    <label for="extracurricular_activities">Extracurricular Activities:</label>
+    <textarea id="extracurricular_activities" name="extracurricular_activities" rows="3"></textarea>
+    
 
     <button type="submit">Generate Resume</button>
 </form>
