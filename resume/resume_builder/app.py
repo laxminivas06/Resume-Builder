@@ -131,8 +131,7 @@ def generate():
     # Header Section (centered)
     p.setFont("Times-Roman", 20)
     name_width = p.stringWidth(name, "Times-Roman", 20)
-    p.setFillColor(colors.black)
-    p.drawString((width - name_width) / 2, y_position, name)
+    p .drawString((width - name_width) / 2, y_position, name)
     y_position -= 20
 
     # Contact Info
@@ -232,7 +231,7 @@ def generate():
         p.setFillColor(colors.black)
         p.line(left_margin, y_position, width - right_margin, y_position)
         y_position -= 15
-        y_position = draw_wrapped_text(p, education, "Times-Roman", 10, left_margin, right_margin, y_position)
+        y_position = draw_wrapped_text(p, education , "Times-Roman", 10, left_margin, right_margin, y_position)
 
     # Projects Section
     if projects.strip():
