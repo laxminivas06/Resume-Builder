@@ -67,24 +67,29 @@ def draw_wrapped_text(p, text, font_name, font_size, left_margin, right_margin, 
 
 @app.route('/generate', methods=['POST'])
 def generate():
-    # Capture form data
+    # Capture form data - Personal Details
     name = request.form.get('name', '')
     email = request.form.get('email', '')
     phone = request.form.get('phone', '')
+    dob = request.form.get('dob', '')
+    address = request.form.get('address', '')
     country = request.form.get('country', '')
+    languages = request.form.get('languages', '')
+    hobbies = request.form.get('hobbies', '')
+    linkedin = request.form.get('linkedin', '')
+    github = request.form.get('github', '')
+
+    # Capture form data - Professional Details
     objective = request.form.get('objective', '')
     education = request.form.get('education', '')
-    projects = request.form.get('projects', '')
     work_experience = request.form.get('work_experience', '')
-    skills = request.form.get('skills', '')
+    projects = request.form.get('projects', '')
+    technical_skills = request.form.get('technical_skills', '')
+    non_technical_skills = request.form.get('non_technical_skills', '')
     achievements = request.form.get('achievements', '')
-    languages = request.form.get('languages', '')
-    virtual_internships = request.form.get('virtual_internships', '')
     research_papers = request.form.get('research_papers', '')
     certifications = request.form.get('certifications', '')
     extracurricular_activities = request.form.get('extracurricular_activities', '')
-    linkedin = request.form.get('linkedin', '')
-    github = request.form.get('github', '')
 
     # Ensure LinkedIn and GitHub links are properly formatted
     if linkedin and not linkedin.startswith(('http://', 'https://')):
@@ -92,27 +97,32 @@ def generate():
     if github and not github.startswith(('http://', 'https://')):
         github = 'http://' + github
 
-    
-
     # Save data to JSON
     save_to_json({
-        'name': name,
-        'email': email,
-        'phone': phone,
-        'country': country,
-        'objective': objective,
-        'education': education,
-        'projects': projects,
-        'work_experience': work_experience,
-        'skills': skills,
-        'achievements': achievements,
-        'languages': languages,
-        'virtual_internships': virtual_internships,
-        'research_papers': research_papers,
-        'certifications': certifications,
-        'extracurricular_activities': extracurricular_activities,
-        'linkedin': linkedin,
-        'github': github
+        'personal_details': {
+            'name': name,
+            'email': email,
+            'phone': phone,
+            'dob': dob,
+            'address': address,
+            'country': country,
+            'languages': languages,
+            'hobbies': hobbies,
+            'linkedin': linkedin,
+            'github': github
+        },
+        'professional_details': {
+            'objective': objective,
+            'education': education,
+            'work_experience': work_experience,
+            'projects': projects,
+            'technical_skills': technical_skills,
+            'non_technical_skills': non_technical_skills,
+            'achievements': achievements,
+            'research_papers': research_papers,
+            'certifications': certifications,
+            'extracurricular_activities': extracurricular_activities
+        }
     })
 
     buffer = BytesIO()
@@ -131,7 +141,7 @@ def generate():
     # Header Section (centered)
     p.setFont("Times-Roman", 20)
     name_width = p.stringWidth(name, "Times-Roman", 20)
-    p .drawString((width - name_width) / 2, y_position, name)
+    p.drawString((width - name_width) / 2, y_position, name)
     y_position -= 20
 
     # Contact Info
@@ -198,16 +208,34 @@ def generate():
     # Move down after contact info
     y_position -= 40
 
-    # Function to check for page break
-    def check_page_break(p, y_position, min_y):
-        if y_position < min_y:
-            p.showPage()
-            p.setFont("Times-Roman", 10)
-            return height - top_margin
-        return y_position
-
     # Set minimum y_position threshold
     min_y_position = bottom_margin + 50
+
+    # Personal Details Section
+    personal_details = []
+    if dob.strip():
+        personal_details.append(f"Date of Birth: {dob}")
+    if address.strip():
+        personal_details.append(f"Address: {address}")
+    if languages.strip():
+        personal_details.append(f"Languages: {languages}")
+    if hobbies.strip():
+        personal_details.append(f"Hobbies: {hobbies}")
+
+    if personal_details:
+        y_position = check_page_break(p, y_position, min_y_position)
+        p.setFont("Times-Bold", 12)
+        p.setFillColor(colors.darkblue)
+        p.drawString(left_margin, y_position, "Personal Details")
+        y_position -= 5
+        p.setFillColor(colors.black)
+        p.line(left_margin, y_position, width - right_margin, y_position)
+        y_position -= 15
+        
+        p.setFont("Times-Roman", 10)
+        for detail in personal_details:
+            y_position = draw_wrapped_text(p, detail, "Times-Roman", 10, left_margin, right_margin, y_position)
+            y_position -= 10  # Additional spacing between items
 
     # Objective Section
     if objective.strip():
@@ -231,19 +259,7 @@ def generate():
         p.setFillColor(colors.black)
         p.line(left_margin, y_position, width - right_margin, y_position)
         y_position -= 15
-        y_position = draw_wrapped_text(p, education , "Times-Roman", 10, left_margin, right_margin, y_position)
-
-    # Projects Section
-    if projects.strip():
-        y_position = check_page_break(p, y_position, min_y_position)
-        p.setFont("Times-Bold", 12)
-        p.setFillColor(colors.darkblue)
-        p.drawString(left_margin, y_position, "Projects")
-        y_position -= 5
-        p.setFillColor(colors.black)
-        p.line(left_margin, y_position, width - right_margin, y_position)
-        y_position -= 15
-        y_position = draw_wrapped_text(p, projects, "Times-Roman", 10, left_margin, right_margin, y_position)
+        y_position = draw_wrapped_text(p, education, "Times-Roman", 10, left_margin, right_margin, y_position)
 
     # Work Experience Section
     if work_experience.strip():
@@ -257,8 +273,26 @@ def generate():
         y_position -= 15
         y_position = draw_wrapped_text(p, work_experience, "Times-Roman", 10, left_margin, right_margin, y_position)
 
+    # Projects Section
+    if projects.strip():
+        y_position = check_page_break(p, y_position, min_y_position)
+        p.setFont("Times-Bold", 12)
+        p.setFillColor(colors.darkblue)
+        p.drawString(left_margin, y_position, "Projects")
+        y_position -= 5
+        p.setFillColor(colors.black)
+        p.line(left_margin, y_position, width - right_margin, y_position)
+        y_position -= 15
+        y_position = draw_wrapped_text(p, projects, "Times-Roman", 10, left_margin, right_margin, y_position)
+
     # Skills Section
-    if skills.strip():
+    skills_content = []
+    if technical_skills.strip():
+        skills_content.append(f"Technical Skills:\n{technical_skills}")
+    if non_technical_skills.strip():
+        skills_content.append(f"Non-Technical Skills:\n{non_technical_skills}")
+
+    if skills_content:
         y_position = check_page_break(p, y_position, min_y_position)
         p.setFont("Times-Bold", 12)
         p.setFillColor(colors.darkblue)
@@ -267,7 +301,10 @@ def generate():
         p.setFillColor(colors.black)
         p.line(left_margin, y_position, width - right_margin, y_position)
         y_position -= 15
-        y_position = draw_wrapped_text(p, skills, "Times-Roman", 10, left_margin, right_margin, y_position)
+        
+        for skill_section in skills_content:
+            y_position = draw_wrapped_text(p, skill_section, "Times-Roman", 10, left_margin, right_margin, y_position)
+            y_position -= 10  # Additional spacing between skill types
 
     # Achievements Section
     if achievements.strip():
@@ -280,30 +317,6 @@ def generate():
         p.line(left_margin, y_position, width - right_margin, y_position)
         y_position -= 15
         y_position = draw_wrapped_text(p, achievements, "Times-Roman", 10, left_margin, right_margin, y_position)
-
-    # Languages Section
-    if languages.strip():
-        y_position = check_page_break(p, y_position, min_y_position)
-        p.setFont("Times-Bold", 12)
-        p.setFillColor(colors.darkblue)
-        p.drawString(left_margin, y_position, "Languages")
-        y_position -= 5
-        p.setFillColor(colors.black)
-        p.line(left_margin, y_position, width - right_margin, y_position)
-        y_position -= 15
-        y_position = draw_wrapped_text(p, languages, "Times-Roman", 10, left_margin, right_margin, y_position)
-
-    # Virtual Internships Section
-    if virtual_internships.strip():
-        y_position = check_page_break(p, y_position, min_y_position)
-        p.setFont("Times-Bold", 12)
-        p.setFillColor(colors.darkblue)
-        p.drawString(left_margin, y_position, "Virtual Internships")
-        y_position -= 5
-        p.setFillColor(colors.black)
-        p.line(left_margin, y_position, width - right_margin, y_position)
-        y_position -= 15
-        y_position = draw_wrapped_text(p, virtual_internships, "Times-Roman", 10, left_margin, right_margin, y_position)
 
     # Research Papers Section
     if research_papers.strip():

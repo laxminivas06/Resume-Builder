@@ -121,13 +121,22 @@
                 height: 120px;
             }
         }
+        .section-title {
+            background-color: #f0f0f0;
+            padding: 8px;
+            margin: 20px 0 10px 0;
+            border-left: 4px solid #28a745;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
 <h1>Resume Generator</h1>
 <form action="/generate" method="POST">
-    <label for="name">Name:</label>
+    <div class="section-title">Personal Details</div>
+    
+    <label for="name">Full Name:</label>
     <input type="text" id="name" name="name" required>
 
     <label for="email">Email:</label>
@@ -136,35 +145,48 @@
     <label for="phone">Phone:</label>
     <input type="text" id="phone" name="phone" required>
 
+    <label for="dob">Date of Birth:</label>
+    <input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY">
+
+    <label for="address">Residential Address:</label>
+    <textarea id="address" name="address" rows="3"></textarea>
+
     <label for="country">Country:</label>
     <input type="text" id="country" name="country" required>
+    
+    <label for="languages">Languages Known:</label>
+    <textarea id="languages" name="languages" rows="3" placeholder="English, Hindi, etc."></textarea>
+    
+    <label for="hobbies">Interests/Hobbies:</label>
+    <textarea id="hobbies" name="hobbies" rows="3"></textarea>
     
     <input type="text" name="github" placeholder="GitHub Profile URL">
     <input type="text" name="linkedin" placeholder="LinkedIn Profile URL">
 
+    <div class="section-title">Professional Details</div>
+    
     <label for="objective">Objective:</label>
     <textarea id="objective" name="objective" rows="3"></textarea>
 
     <label for="education">Education:</label>
     <textarea id="education" name="education" rows="3"></textarea>
 
-    <label for="projects">Projects:</label>
-    <textarea id="projects" name="projects" rows="3"></textarea>
-    
     <label for="work_experience">Work Experience:</label>
     <textarea id="work_experience" name="work_experience" rows="3"></textarea>
 
-    <label for="technical_skills">Skills:</label>
-    <textarea id="technical_skills" name="skills" rows="3"></textarea>
+    <label for="projects">Projects:</label>
+    <textarea id="projects" name="projects" rows="3"></textarea>
+
+    <div class="section-title">Skills</div>
+    
+    <label for="technical_skills">Technical Skills:</label>
+    <textarea id="technical_skills" name="technical_skills" rows="3" placeholder="Programming languages, tools, technologies"></textarea>
+
+    <label for="non_technical_skills">Non-Technical Skills:</label>
+    <textarea id="non_technical_skills" name="non_technical_skills" rows="3" placeholder="Communication, Leadership, etc."></textarea>
 
     <label for="achievements">Achievements:</label>
     <textarea id="achievements" name="achievements" rows="3"></textarea>
-    
-    <label for="languages_known">Languages Known:</label>
-    <textarea id="languages_known" name="languages" rows="3"></textarea>
-    
-    <label for="virtual_internships">Virtual Internships:</label>
-    <textarea id="virtual_internships" name="virtual_internships" rows="3"></textarea>
     
     <label for="research_papers">Research Papers:</label>
     <textarea id="research_papers" name="research_papers" rows="3"></textarea>

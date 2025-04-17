@@ -1,3 +1,54 @@
 [
-    
+    {
+        "personal_details": {
+            "name": "nivas",
+            "email": "nivas@gmail.com",
+            "phone": "9059160424",
+            "dob": "06/10/2006",
+            "address": "ewfd",
+            "country": "India",
+            "languages": "",
+            "hobbies": "",
+            "linkedin": "",
+            "github": ""
+        },
+        "professional_details": {
+            "objective": "",
+            "education": "",
+            "work_experience": "",
+            "projects": "",
+            "technical_skills": "",
+            "non_technical_skills": "",
+            "achievements": "",
+            "research_papers": "",
+            "certifications": "",
+            "extracurricular_activities": ""
+        }
+    },
+    {
+        "personal_details": {
+            "name": "Laxmi Nivas Morishetty",
+            "email": "laxminivamorishetty143@gmail.com",
+            "phone": "9059160424",
+            "dob": "06/10/2006",
+            "address": "Hyderabad",
+            "country": "India",
+            "languages": "English",
+            "hobbies": "sdv",
+            "linkedin": "http://sfc",
+            "github": "http://sf"
+        },
+        "professional_details": {
+            "objective": "sfv",
+            "education": "sfv",
+            "work_experience": "sf",
+            "projects": "sfv",
+            "technical_skills": "sfvfs",
+            "non_technical_skills": "sfvfv",
+            "achievements": "sfvsfcv",
+            "research_papers": "svsfv",
+            "certifications": "ssv",
+            "extracurricular_activities": "fssfv"
+        }
+    }
 ]
